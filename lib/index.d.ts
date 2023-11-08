@@ -1,2 +1,2 @@
-import DocumentTable from './DocumentTable';
-export default DocumentTable;
+import SocketIoProvider, { SocketIoContext } from './SocketIoContext';
+export { SocketIoContext, SocketIoProvider };
