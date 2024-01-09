@@ -87,11 +87,11 @@ export default function SocketIoProvider({
   const emitAndListen = async (
     event: string,
     data: any,
-    callback: Function,
+    callback: (data: any) => void,
   ) => {
-    await new Promise((res: Function) => {
+    await new Promise((res: any) => {
       emit(event, data)
-      res()
+      res(0)
     })
     manager.current &&
       manager.current.on(event, (result: any) => {
