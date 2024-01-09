@@ -9,7 +9,7 @@ import io, { Socket } from 'socket.io-client'
  * @param corsOrigin - The cors origin of the websocket server.
  */
 interface SocketIoContextProps {
-  on: (event: string, callback: () => void) => void
+  on: (event: string, callback: (data: any) => void) => void
   emit: (event: string, payload: any) => void
   joinRoom: (name: string) => void
   connect: () => void
