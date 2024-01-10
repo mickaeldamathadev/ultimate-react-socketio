@@ -104,9 +104,6 @@ export default function SocketIoProvider({
   }
 
   useEffect(() => {
-    if (manager.current) {
-      return
-    }
     connect()
     return () => {
       manager.current?.removeAllListeners()
