@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Socket } from 'socket.io-client';
 /**
  * Hook for managing websocket connections.
  * @param url - The url of the websocket server.
@@ -14,6 +15,7 @@ interface SocketIoContextProps {
     disconnect: () => void;
     emitAndListen: (event: string, data: any, callback: Function) => void;
     stopListening: (event: string) => void;
+    socket: Socket;
 }
 interface SocketIoContextProviderProps {
     children: ReactNode;

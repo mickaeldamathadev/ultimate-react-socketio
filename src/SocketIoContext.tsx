@@ -16,6 +16,7 @@ interface SocketIoContextProps {
   disconnect: () => void
   emitAndListen: (event: string, data: any, callback: Function) => void
   stopListening: (event: string) => void
+  socket: Socket
 }
 
 interface SocketIoContextProviderProps {
@@ -75,7 +76,9 @@ export default function SocketIoProvider({
 
   const joinRoom = (name: any) => manager.current?.emit('join', name)
 
-  const emit = (event: any, data: any) => manager.current?.emit(event, data)
+  const emit = (event: any, data: any) => {
+    manager.current.emit(event, data)
+  }
 
   const on = (event: any, callback: (data: any) => void) => {
     manager.current && manager.current.on(event, callback)
@@ -120,6 +123,7 @@ export default function SocketIoProvider({
         joinRoom,
         emitAndListen,
         stopListening,
+        socket: manager.current,
       }}
     >
       {children}
