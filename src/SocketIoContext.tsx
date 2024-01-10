@@ -41,6 +41,7 @@ export default function SocketIoProvider({
   const manager = useRef<Socket<any, any> | undefined>()
 
   const connect = () => {
+    console.log('try connect')
     manager.current = io(url, {
       transports: ['websocket'],
       autoConnect: true,
