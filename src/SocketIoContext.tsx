@@ -106,6 +106,7 @@ export default function SocketIoProvider({
   }
 
   const setAuthSocketToken = (token: string) => {
+    console.log('set auth token socket')
     manager.current.auth = {
       token,
     }
