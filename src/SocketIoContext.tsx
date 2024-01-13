@@ -17,6 +17,7 @@ interface SocketIoContextProps {
   emitAndListen: (event: string, data: any, callback: Function) => void
   stopListening: (event: string) => void
   socket: Socket
+  setAuthSocketToken: (token: string) => void
 }
 
 interface SocketIoContextProviderProps {
@@ -57,6 +58,18 @@ export default function SocketIoProvider({
         },
       },
     })
+
+    manager.current.on('connect_error', (error: Error) => {
+      console.log(error.message)
+      onStateChange && onStateChange({ state: 'connect_error', error })
+    })
+
+    manager.current.on('disconnect', (reason: string) => {
+      onStateChange && onStateChange({ state: 'disconnect', reason })
+    })
+    manager.current.on('connect', () => {
+      console.log('connected')
+    })
   }
 
   const disconnect = () => {
@@ -92,20 +105,13 @@ export default function SocketIoProvider({
     manager.current?.removeListener(event)
   }
 
+  const setAuthSocketToken = (token: string) => {
+    manager.current.auth = {
+      token,
+    }
+  }
+
   useEffect(() => {
-    connect()
-
-    manager.current.on('connect_error', (error: Error) => {
-      console.log(error.message)
-      onStateChange && onStateChange({ state: 'connect_error', error })
-    })
-
-    manager.current.on('disconnect', (reason: string) => {
-      onStateChange && onStateChange({ state: 'disconnect', reason })
-    })
-    manager.current.on('connect', () => {
-      console.log('connected')
-    })
     return () => {
       manager.current?.removeAllListeners()
     }
@@ -122,6 +128,7 @@ export default function SocketIoProvider({
         emitAndListen,
         stopListening,
         socket: manager.current,
+        setAuthSocketToken,
       }}
     >
       {children}

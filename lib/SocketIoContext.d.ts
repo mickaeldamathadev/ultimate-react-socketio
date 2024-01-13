@@ -16,6 +16,7 @@ interface SocketIoContextProps {
     emitAndListen: (event: string, data: any, callback: Function) => void;
     stopListening: (event: string) => void;
     socket: Socket;
+    setAuthSocketToken: (token: string) => void;
 }
 interface SocketIoContextProviderProps {
     children: ReactNode;
