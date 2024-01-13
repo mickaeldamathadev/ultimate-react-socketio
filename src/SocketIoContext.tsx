@@ -12,7 +12,7 @@ interface SocketIoContextProps {
   on: (event: string, callback: (data: any) => void) => void
   emit: (event: string, payload: any) => void
   joinRoom: (name: string) => void
-  connect: () => void
+  connect: (token?: string) => void
   disconnect: () => void
   emitAndListen: (event: string, data: any, callback: Function) => void
   stopListening: (event: string) => void
@@ -41,7 +41,7 @@ export default function SocketIoProvider({
 }: SocketIoContextProviderProps) {
   const manager = useRef<Socket<any, any> | undefined>()
 
-  const connect = () => {
+  const connect = (token: string) => {
     console.log('try connect')
     manager.current = io(url, {
       transports: ['websocket'],
@@ -56,6 +56,7 @@ export default function SocketIoProvider({
           methods: ['GET', 'POST'],
           credentials: true,
         },
+        token,
       },
     })
 

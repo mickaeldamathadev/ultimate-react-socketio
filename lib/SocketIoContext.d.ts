@@ -11,7 +11,7 @@ interface SocketIoContextProps {
     on: (event: string, callback: (data: any) => void) => void;
     emit: (event: string, payload: any) => void;
     joinRoom: (name: string) => void;
-    connect: () => void;
+    connect: (token?: string) => void;
     disconnect: () => void;
     emitAndListen: (event: string, data: any, callback: Function) => void;
     stopListening: (event: string) => void;
