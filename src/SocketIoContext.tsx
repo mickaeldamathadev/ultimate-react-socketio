@@ -84,6 +84,7 @@ export default function SocketIoProvider({
   }
 
   const on = (event: any, callback: (data: any) => void) => {
+    manager.current && manager.current.off(event)
     manager.current && manager.current.on(event, callback)
   }
 
