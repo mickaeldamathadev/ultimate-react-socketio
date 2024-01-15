@@ -59,18 +59,6 @@ export default function SocketIoProvider({
         token,
       },
     })
-
-    manager.current.on('connect_error', (error: Error) => {
-      console.log(error.message)
-      onStateChange && onStateChange({ state: 'connect_error', error })
-    })
-
-    manager.current.on('disconnect', (reason: string) => {
-      onStateChange && onStateChange({ state: 'disconnect', reason })
-    })
-    manager.current.on('connect', () => {
-      console.log('connected')
-    })
   }
 
   const disconnect = () => {
@@ -115,6 +103,17 @@ export default function SocketIoProvider({
   }
 
   useEffect(() => {
+    manager.current.on('connect_error', (error: Error) => {
+      console.log(error.message)
+      onStateChange && onStateChange({ state: 'connect_error', error })
+    })
+
+    manager.current.on('disconnect', (reason: string) => {
+      onStateChange && onStateChange({ state: 'disconnect', reason })
+    })
+    manager.current.on('connect', () => {
+      console.log('connected')
+    })
     return () => {
       manager.current?.removeAllListeners()
     }
