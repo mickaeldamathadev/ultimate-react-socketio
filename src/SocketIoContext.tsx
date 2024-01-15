@@ -41,8 +41,7 @@ export default function SocketIoProvider({
 }: SocketIoContextProviderProps) {
   const manager = useRef<Socket<any, any> | undefined>()
 
-  const connect = (token: string) => {
-    console.log('try connect')
+  const connect = async () => {
     manager.current = io(url, {
       transports: ['websocket'],
       autoConnect: true,
@@ -56,7 +55,7 @@ export default function SocketIoProvider({
           methods: ['GET', 'POST'],
           credentials: true,
         },
-        token,
+        token: window.localStorage.getItem('access_token'),
       },
     })
   }
@@ -103,6 +102,7 @@ export default function SocketIoProvider({
   }
 
   useEffect(() => {
+    connect()
     manager.current &&
       manager.current.on('connect_error', (error: Error) => {
         console.log(error.message)
