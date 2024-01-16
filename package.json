@@ -1,6 +1,6 @@
 {
   "name": "ultimate-react-socketio",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "ultimate-react-socketio",
   "private": false,
   "main": "lib/index.js",
