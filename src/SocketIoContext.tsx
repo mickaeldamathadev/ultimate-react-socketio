@@ -42,6 +42,7 @@ export default function SocketIoProvider({
   const manager = useRef<Socket<any, any> | undefined>()
 
   const connect = (token: string) => {
+    manager.current && manager.current.disconnect()
     manager.current = io(url, {
       transports: ['websocket'],
       autoConnect: true,
@@ -102,7 +103,6 @@ export default function SocketIoProvider({
   }
 
   useEffect(() => {
-    connect
     manager.current &&
       manager.current.on('connect_error', (error: Error) => {
         console.log(error.message)
@@ -118,7 +118,8 @@ export default function SocketIoProvider({
         console.log('connected')
       })
     return () => {
-      manager.current?.removeAllListeners()
+      manager.current && manager.current.removeAllListeners()
+      manager.current && manager.current.disconnect()
     }
   }, [manager.current])
 
