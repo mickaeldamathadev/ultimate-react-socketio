@@ -67,7 +67,7 @@ export default function SocketIoProvider({
   const joinRoom = (name: any) => manager.current?.emit('join', name)
 
   const emit = (event: any, data: any) => {
-    manager.current.emit(event, data)
+    manager.current && manager.current.emit(event, data)
   }
 
   const on = (event: any, callback: (data: any) => void) => {
